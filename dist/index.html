@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Autumn 2026 UChicago Economics PhD course investigation and degree planning hub.">
+  <title>UChicago Economics PhD · Autumn 2026 Course Lab</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23800000'/%3E%3Cpath d='M18 18h30v8H28v8h16v8H28v8h20v8H18z' fill='%23fff7ea'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#course-results">Skip to course results</a>
+  <header class="topbar">
+    <div class="brand">
+      <span class="monogram" aria-hidden="true">E</span>
+      <div><strong>Economics PhD Course Lab</strong><span id="brand-term">University of Chicago</span></div>
+    </div>
+    <nav aria-label="Page sections">
+      <a href="#courses">Courses</a><a href="#calendar">Calendar</a><a href="#requirements">Requirements</a><a href="#sources">Sources</a>
+    </nav>
+    <label class="term-picker" for="term-select"><span>Quarter</span><select id="term-select" aria-label="Academic quarter"></select></label>
+    <div class="font-controls" aria-label="Text size">
+      <span>Text size</span>
+      <button type="button" data-font-scale="0.9" aria-label="Use smaller text">A−</button>
+      <button type="button" data-font-scale="1" aria-label="Use standard text">A</button>
+      <button type="button" data-font-scale="1.15" aria-label="Use larger text">A+</button>
+      <button type="button" data-font-scale="1.3" aria-label="Use largest text">A++</button>
+    </div>
+    <button class="print-button" id="print-btn" type="button">Print / PDF</button>
+  </header>
+
+  <main>
+    <section class="briefing" aria-labelledby="brief-title">
+      <div>
+        <p class="eyebrow" id="snapshot-label">Decision brief</p>
+        <h1 id="brief-title">Build a quarter that advances a field—not just a transcript.</h1>
+        <p class="lede" id="term-description"></p>
+      </div>
+      <div class="profile-card">
+        <div><span>Program inferred</span><strong>Economics PhD</strong></div>
+        <div><span>Current year</span><strong>Not provided</strong></div>
+        <div><span>Interests</span><strong>Not provided</strong></div>
+        <div><span>Completed courses</span><strong>None provided</strong></div>
+      </div>
+      <div class="alert-strip" id="planning-flags"></div>
+    </section>
+
+    <section class="metrics" aria-label="Quarter overview">
+      <article><span class="metric-num" id="screened-count">0</span><span>ECON listings screened</span></article>
+      <article><span class="metric-num" id="research-count">0</span><span>research-facing credit options</span></article>
+      <article><span class="metric-num" id="workshop-count">0</span><span>workshops & working groups</span></article>
+      <article><span class="metric-num" id="syllabus-count">0</span><span>public syllabi found</span></article>
+      <article><span class="metric-num" id="shortlist-count">0</span><span>courses shortlisted</span></article>
+    </section>
+
+    <section class="planner" id="courses" aria-labelledby="courses-title">
+      <aside class="filter-panel">
+        <div class="panel-heading"><p class="eyebrow">Explore</p><h2>Course finder</h2></div>
+        <label class="search-label" for="search">Search title, number, instructor, topic</label>
+        <input type="search" id="search" placeholder="e.g. partial identification">
+        <fieldset>
+          <legend>Field</legend>
+          <div id="field-filters" class="check-stack"></div>
+        </fieldset>
+        <fieldset>
+          <legend>Enrollment</legend>
+          <label><input type="checkbox" value="open" name="status"> Open</label>
+          <label><input type="checkbox" value="closed" name="status"> Closed</label>
+          <label><input type="checkbox" value="cancelled" name="status"> Cancelled</label>
+        </fieldset>
+        <fieldset>
+          <legend>Intensity ceiling</legend>
+          <label for="math-filter">Math <output id="math-out">5</output>/5</label>
+          <input id="math-filter" type="range" min="1" max="5" value="5">
+          <label for="code-filter">Coding <output id="code-out">5</output>/5</label>
+          <input id="code-filter" type="range" min="1" max="5" value="5">
+          <label for="workload-filter">Workload <output id="workload-out">5</output>/5</label>
+          <input id="workload-filter" type="range" min="1" max="5" value="5">
+        </fieldset>
+        <label class="toggle"><input id="shortlist-only" type="checkbox"><span>Show shortlist only</span></label>
+        <button class="text-button" id="reset-filters" type="button">Reset filters</button>
+      </aside>
+
+      <div class="results-panel">
+        <div class="section-heading">
+          <div><p class="eyebrow">Research briefs</p><h2 id="courses-title">Quarter courses</h2></div>
+          <div class="result-meta"><span id="result-count"></span><select id="sort" aria-label="Sort courses"><option value="number">Sort by number</option><option value="research">Research usefulness</option><option value="workload">Workload</option><option value="availability">Availability</option></select></div>
+        </div>
+        <div id="course-results" class="course-grid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="workspace-section" id="calendar" aria-labelledby="calendar-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">Shortlist workspace</p><h2 id="calendar-title">Weekly calendar & conflicts</h2></div>
+        <div class="calendar-actions"><button class="text-button" id="copy-calendar-link" type="button">Copy calendar link</button><button class="text-button" id="restore-published" type="button">Load published plan</button><button class="text-button" id="clear-shortlist" type="button">Clear draft</button></div>
+      </div>
+      <div class="plan-state" id="plan-state"></div>
+      <div id="conflict-summary" class="conflict-summary"></div>
+      <div class="calendar-wrap"><div class="calendar" id="calendar-grid"></div></div>
+      <p class="fine-print">Primary meetings and listed discussions are included. Overlapping meetings share the day column side by side. Pre-quarter camps and ECON 49700's unselected alternative sections are omitted. TBA meetings cannot be conflict-tested.</p>
+    </section>
+
+    <section class="workspace-section" aria-labelledby="portfolio-title">
+      <div class="section-heading"><div><p class="eyebrow">Compare bundles</p><h2 id="portfolio-title">Suggested portfolios</h2></div><p class="subtle">These are editorial planning sketches—not program approvals.</p></div>
+      <div id="portfolio-grid" class="portfolio-grid"></div>
+    </section>
+
+    <section class="workspace-section requirements-section" id="requirements" aria-labelledby="requirements-title">
+      <div class="section-heading"><div><p class="eyebrow">Browser-local progress</p><h2 id="requirements-title">Degree requirement map</h2></div><span class="progress-label" id="requirement-progress">0 of 0</span></div>
+      <div class="progress-track"><span id="progress-bar"></span></div>
+      <div class="requirements-layout">
+        <div id="requirement-list" class="requirement-list"></div>
+        <aside class="rules-card">
+          <h3>Rules that change course choices</h3>
+          <ul>
+            <li><strong>Two fields by end of year 2.</strong> Missing the deadline triggers probation and a one-year extension; all fields must be complete by end of year 3.</li>
+            <li><strong>Field GPA route:</strong> take the prescribed sequence in one academic year for quality grades and average at least 3.0. A course cannot count toward both fields.</li>
+            <li><strong>Distribution:</strong> three courses outside both fields, each C− or better. Outside-department courses need DGS permission.</li>
+            <li><strong>Core exams:</strong> three components after year 1; failed components may be retaken once. A second failure means dismissal.</li>
+            <li><strong>Research paper:</strong> due by end of summer after year 3; failure to finish by beginning of Spring year 4 leads to withdrawal.</li>
+            <li><strong>Teaching:</strong> five MTE points in years 2–5; grading can supply at most two total points.</li>
+            <li><strong>Time to degree:</strong> dissertation defense by end of year 6; a seventh year requires an approved extenuating-circumstances petition.</li>
+          </ul>
+          <p class="source-note">Source: official 2025–26 Graduate Program Guidebook. Confirm policy changes for 2026–27 with Graduate Student Affairs.</p>
+        </aside>
+      </div>
+      <details class="field-map">
+        <summary>View handbook field sequences</summary>
+        <div id="field-map-grid"></div>
+      </details>
+    </section>
+
+    <section class="workspace-section split-section">
+      <div>
+        <div class="section-heading"><div><p class="eyebrow">Operating calendar</p><h2>Important dates</h2></div></div>
+        <div id="date-list" class="date-list"></div>
+      </div>
+      <div>
+        <div class="section-heading"><div><p class="eyebrow">Research ecosystem</p><h2>Workshops & working groups</h2></div><button id="workshop-toggle" class="text-button" type="button">Show all</button></div>
+        <div class="workshop-table-wrap"><table class="workshop-table"><thead><tr><th>Workshop</th><th>Time</th><th>Seats*</th></tr></thead><tbody id="workshop-body"></tbody></table></div>
+        <p class="fine-print">*Seat counts are volatile and some zero-credit/600-level groups require consent. The handbook says 600-level consent is not guaranteed.</p>
+      </div>
+    </section>
+
+    <section class="workspace-section" id="sources" aria-labelledby="sources-title">
+      <div class="section-heading"><div><p class="eyebrow">Audit trail</p><h2 id="sources-title">Source ledger</h2></div><p class="subtle">Open every link; freshness is explicit.</p></div>
+      <div class="legend"><span class="badge current">Current-quarter official</span><span class="badge prior">Recent prior offering</span><span class="badge background">Older/current background</span><span class="badge inference">Editorial inference</span><span class="badge missing">No public syllabus located</span></div>
+      <div class="source-table-wrap"><table class="source-table"><thead><tr><th>Source</th><th>Quality</th><th>Use and limitation</th></tr></thead><tbody id="source-body"></tbody></table></div>
+    </section>
+  </main>
+
+  <footer>
+    <p><strong>Course Lab</strong> · An evidence-tagged planning aid, not an official degree audit.</p>
+    <p id="footer-freshness">Shortlist and checklist remain only in this browser.</p>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="bootstrap.js"></script>
+</body>
+</html>
